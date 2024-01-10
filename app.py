@@ -3,8 +3,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
-
-
+from chat import chat
 app = Flask(__name__, static_url_path='',
             static_folder="../demo/dist",
             template_folder="../demo/dist")
@@ -40,5 +39,12 @@ def update_palette():
         setattr(palette,f"color{idx+1}",hex)
     db.session.commit()
     return body
+@app.post("/ai")
+def get_ans():
+    body = request.get_json()
+    description = body.get("description")
+    ans = chat(description=description)
+    return ans.get("palette",[])
+
 if __name__ == "__main__":
     app.run(debug=True)
