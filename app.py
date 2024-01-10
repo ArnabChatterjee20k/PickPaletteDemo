@@ -45,6 +45,7 @@ def get_ans():
     description = body.get("description")
     ans = chat(description=description)
     return ans.get("palette",[])
+    # return ["#242038", "#9067C6", "#8D86C9", "#BDAFC7", "#F7ECE1"];
 
 if __name__ == "__main__":
     app.run(debug=True)
